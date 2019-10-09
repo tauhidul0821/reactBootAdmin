@@ -91,5 +91,27 @@ module.exports = {
     } catch (err) {
       next(err);
     }
+  },
+  setSessionmidile: async (req, res, next) => {
+    try {
+      res.setHeader('Content-Type', 'text/html');
+      res.write('<p>views: ' + req.session.views + ' Time</p>');
+      //res.write('<p>expires in: ' + limitedTime / 1000 + ' second</p>');
+      res.end();
+    } catch (err) {
+      next(err);
+    }
+  },
+  getSessionmidile: async (req, res, next) => {
+    try {
+      res.send(
+        'Your favourite color ... !' +
+          (req.session.favColor == undefined
+            ? 'NOT FOUND'
+            : req.session.favColor)
+      );
+    } catch (err) {
+      next(err);
+    }
   }
 };

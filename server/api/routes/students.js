@@ -6,6 +6,7 @@ const passportConf = require('../../config/passport');
 const passportJWT = passport.authenticate('jwt', { session: false });
 // Load Model
 const Students = require('../models/Students');
+const SessionsController = require('../../config/SessionsController');
 router
   .route('/all')
   .get(StudentsController.getAll)
@@ -33,5 +34,15 @@ router
 router
   .route('/getSession')
   .get(StudentsController.getSession)
+  .post(StudentsController.test);
+
+router
+  .route('/setSessionmidile')
+  .get(StudentsController.setSessionmidile)
+  .post(StudentsController.test);
+
+router
+  .route('/getSessionmidile')
+  .get(SessionsController.getSession)
   .post(StudentsController.test);
 module.exports = router;
