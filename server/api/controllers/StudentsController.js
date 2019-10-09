@@ -11,7 +11,6 @@ const validateLoginInput = require('../validation/login');
 const User = require('../models/Users');
 const Students = require('../models/Students');
 
-
 module.exports = {
   test: async (req, res, next) => {
     try {
@@ -32,14 +31,14 @@ module.exports = {
     try {
       //res.status(200).json({ success: 'insert router ok' });
       const newStudents = new Students({
-      _id: ObjectId(),
-      name: req.body.name,
-      age: req.body.age,
-      cgpa: req.body.cgpa
-    });
-    
-    const newStudentsRes = await newStudents.save();
-    res.status(200).json(newStudentsRes);
+        _id: ObjectId(),
+        name: req.body.name,
+        age: req.body.age,
+        cgpa: req.body.cgpa
+      });
+
+      const newStudentsRes = await newStudents.save();
+      res.status(200).json(newStudentsRes);
     } catch (err) {
       next(err);
     }
@@ -54,6 +53,26 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       res.status(200).json({ success: 'delete router ok' });
+    } catch (err) {
+      next(err);
+    }
+  },
+  setSession: async (req, res, next) => {
+    try {
+      req.session.favColor = 'Red';
+      res.send('setting favourite color ... !');
+    } catch (err) {
+      next(err);
+    }
+  },
+  getSession: async (req, res, next) => {
+    try {
+      res.send(
+        'Your favourite color ... !' +
+          (req.session.favColor == undefined
+            ? 'NOT FOUND'
+            : req.session.favColor)
+      );
     } catch (err) {
       next(err);
     }

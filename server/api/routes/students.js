@@ -25,5 +25,13 @@ router
   .route('/delete')
   .get(StudentsController.delete)
   .post(StudentsController.test);
+router
+  .route('/setSession')
+  .get(StudentsController.setSession)
+  .post(StudentsController.test);
 
+router
+  .route('/getSession')
+  .get(StudentsController.getSession)
+  .post(StudentsController.test);
 module.exports = router;
