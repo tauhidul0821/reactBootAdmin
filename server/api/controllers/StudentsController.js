@@ -60,7 +60,22 @@ module.exports = {
   setSession: async (req, res, next) => {
     try {
       req.session.favColor = 'Red';
-      res.send('setting favourite color ... !');
+      //res.send('setting favourite color ... !');
+      // Set expires
+      const hour = 5000;
+      req.session.cookie.expires = new Date(Date.now() + hour);
+      const limitedTime = (req.session.cookie.maxAge = hour);
+
+      if (req.session.views) {
+        req.session.views++;
+        res.setHeader('Content-Type', 'text/html');
+        res.write('<p>views: ' + req.session.views + ' Time</p>');
+        res.write('<p>expires in: ' + limitedTime / 1000 + 's</p>');
+        res.end();
+      } else {
+        req.session.views = 1;
+        res.end('welcome to the session demo. refresh!');
+      }
     } catch (err) {
       next(err);
     }
