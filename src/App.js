@@ -6,11 +6,27 @@ import StudentEdit from './components/student/StudentEdit';
 import StudentDelete from './components/student/StudentDelete';
 import StudentAdd from './components/student/StudentAdd';
 import './App.css';
+import 'react-table/react-table.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   state = {
     students: []
+  };
+
+  handleRemove = i => {
+    this.setState(state => ({
+      students: state.students.filter((row, j) => j !== i)
+    }));
+  };
+
+  handleChange = (e, name, i) => {
+    const { value } = e.target;
+    this.setState(state => ({
+      students: state.students.map((row, j) =>
+        j === i ? { ...row, [name]: value } : row
+      )
+    }));
   };
 
   componentDidMount() {
@@ -32,7 +48,11 @@ class App extends Component {
               path='/'
               render={props => (
                 <React.Fragment>
-                  <Students student={this.state.students} />
+                  <Students
+                    student={this.state.students}
+                    handleRemove={this.handleRemove}
+                    handleChange={this.handleChange}
+                  />
                 </React.Fragment>
               )}
             />

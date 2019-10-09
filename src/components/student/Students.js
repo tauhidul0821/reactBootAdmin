@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import StudentItem from './StudentItem';
+import InlineForm from './InlineForm';
 //import Pagination from '../pagination/Pagination';
 import { Table, Pagination, Card } from 'react-bootstrap';
 
@@ -8,25 +10,32 @@ class Students extends Component {
   state = {
     students: [],
     studentPerPage: 6,
-    currentPage: 1
+    currentPage: 1,
+    editidx: -1,
+    editEnablebtn: true
+  };
+
+  header = [
+    { name: 'Name', prop: 'name' },
+    { name: 'Age', prop: 'age' },
+    { name: 'Cgpa', prop: 'cgpa' }
+  ];
+
+  startEditing = i => {
+    this.setState({ editIdx: i });
+  };
+
+  stopEditing = () => {
+    this.setState({ editIdx: -1 });
   };
   perPageChange = e => {
-    // if(!('value' in this.props)){
-    //   this.setState({e});
-    // }
-    // this.triggerChange();
     this.setState({ studentPerPage: e.target.value });
   };
 
-  triggerChange = changedValue => {
-    // Should provide an event to pass value to Form.
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange({
-        ...this.state,
-        ...changedValue
-      });
-    }
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   };
   render() {
     const indexOfLastStudent =
@@ -36,9 +45,6 @@ class Students extends Component {
       indexOfFirstStudent,
       indexOfLastStudent
     );
-    //Change Page
-
-    let active = 1;
     let items = [];
     for (
       let number = 1;
@@ -56,7 +62,6 @@ class Students extends Component {
         </Pagination.Item>
       );
     }
-
     const paginate = pageNumber => this.setState({ currentPage: pageNumber });
     return (
       <div>
@@ -68,7 +73,8 @@ class Students extends Component {
               <br />
               Show:{' '}
               <select
-                onChange={this.perPageChange}
+                name='studentPerPage'
+                onChange={this.change}
                 value={this.state.studentPerPage}
               >
                 <option value='5'>5</option>
@@ -81,28 +87,29 @@ class Students extends Component {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Cgpa</th>
-                    <th>Action</th>
+                    {this.header.map((item, i) => (
+                      <th key={i}>{item.name}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {currentStudents.map(function(item, i) {
-                    return (
-                      <StudentItem item={item} key={i} paginate={paginate} />
-                    );
-                  })}
+                  {currentStudents.map((x, i) =>
+                    row(
+                      x,
+                      i,
+                      this.header,
+                      this.props.handleRemove,
+                      this.startEditing,
+                      this.state.editIdx,
+                      this.props.handleChange,
+                      this.stopEditing
+                    )
+                  )}
                 </tbody>
               </Table>
               <Pagination>{items}</Pagination>
             </Card.Text>
           </Card.Body>
-          {/* <Pagination
-          studentPerPage={this.state.studentPerPage}
-          totalStudent={this.props.student.length}
-          paginate={paginate}
-        /> */}
         </Card>
       </div>
     );
@@ -110,3 +117,44 @@ class Students extends Component {
 }
 
 export default Students;
+
+const row = (
+  x,
+  i,
+  header,
+  handleRemove,
+  startEditing,
+  editIdx,
+  handleChange,
+  stopEditing
+) => {
+  const currentlyEditing = editIdx === i;
+  return (
+    <tr key={`tr-${i}`}>
+      {header.map((y, k) => (
+        <td key={`trc-${k}`}>
+          {currentlyEditing ? (
+            <input
+              type='text'
+              name={y.prop}
+              onChange={e => handleChange(e, y.prop, i)}
+              value={x[y.prop]}
+            />
+          ) : (
+            x[y.prop]
+          )}
+        </td>
+      ))}
+      <td>
+        {currentlyEditing ? (
+          <button onClick={() => stopEditing()}>stopEditing</button>
+        ) : (
+          <button onClick={() => startEditing(i)}>startEditing</button>
+        )}
+      </td>
+      <td>
+        <button onClick={() => handleRemove(i)}>handleRemove</button>
+      </td>
+    </tr>
+  );
+};
