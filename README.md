@@ -1,5 +1,5 @@
 ## Run those command sirialwase at the root folder 
 ###  `npm install`
-###  `npm install ./server`
+###  `npm install --prefix ./server`
 ###  `npm start`
-###  `npm start ./server`
+###  `npm start --prefix server`
