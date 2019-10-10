@@ -21,7 +21,7 @@ class File extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} encType='multipart/form-data'>
           <table>
             <tr>
               <td>Photo: </td>

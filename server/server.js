@@ -7,6 +7,8 @@ const users = require('./api/routes/users');
 const students = require('./api/routes/students');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const multer = require('multer');
+const path = require('path');
 
 const app = express();
 // Middleware
@@ -29,6 +31,23 @@ mongoose
   .then(() => console.log('mongodb connected'))
   .catch(err => console.log(err));
 //mongoose.set('useFindAndModify', false);
+
+// file upload middle ware
+const storage = multer.diskStorage({
+  destination: './public/uploads/',
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+    );
+  }
+});
+
+const upload = multer({
+  storage: storage
+}).single('photo');
+
+//
 
 app.use('/api/users', users);
 app.use('/api/students', students);
