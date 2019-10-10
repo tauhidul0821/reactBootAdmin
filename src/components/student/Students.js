@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import StudentItem from './StudentItem';
-import InlineForm from './InlineForm';
 //import Pagination from '../pagination/Pagination';
 import { Table, Pagination, Card } from 'react-bootstrap';
 

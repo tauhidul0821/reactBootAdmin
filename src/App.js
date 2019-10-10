@@ -5,8 +5,8 @@ import Students from './components/student/Students';
 import StudentEdit from './components/student/StudentEdit';
 import StudentDelete from './components/student/StudentDelete';
 import StudentAdd from './components/student/StudentAdd';
+import File from './components/fileupload/File';
 import './App.css';
-import 'react-table/react-table.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -56,6 +56,7 @@ class App extends Component {
                 </React.Fragment>
               )}
             />
+            <Route exact path='/file' component={File} />
             <Route exact path='/add' component={StudentAdd} />
             <Route exact path='/edit' component={StudentEdit} />
             <Route exact path='/delete' component={StudentDelete} />

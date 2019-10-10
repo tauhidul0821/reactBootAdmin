@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { InlineForm } from './InlineForm';
 import { Table } from 'react-bootstrap';
 export default class StudentItem extends Component {
   change = e => {

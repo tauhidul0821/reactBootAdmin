@@ -45,4 +45,11 @@ router
   .route('/getSessionmidile')
   .get(SessionsController.getSession)
   .post(StudentsController.test);
+
+// api/students/photoup
+router
+  .route('/photoup')
+  .get(StudentsController.photoUpMethod)
+  .post(StudentsController.photoUpMethod);
+
 module.exports = router;

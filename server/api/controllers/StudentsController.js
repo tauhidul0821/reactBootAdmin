@@ -113,5 +113,13 @@ module.exports = {
     } catch (err) {
       next(err);
     }
+  },
+  photoUpMethod: async (req, res, next) => {
+    try {
+      console.log(' i am servaer');
+      res.send('this is photo upload method');
+    } catch (err) {
+      next(err);
+    }
   }
 };
