@@ -53,11 +53,13 @@ module.exports = {
       //res.write('<p>views: ' + req.session.views + ' Time</p>');
       //res.write('<p>expires in: ' + limitedTime / 1000 + 's</p>');
       //res.end();
-      return done(req, res, next);
+      done(req, res, next);
+      //return;
     } else {
       req.session.views = 1;
       //res.end('welcome to the session demo. refresh!')
-      return done(req, res, next);
+      done(req, res, next);
+      //return;
     }
   },
   getSession: async (req, res, next, done) => {

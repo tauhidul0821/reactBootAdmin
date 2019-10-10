@@ -96,7 +96,7 @@ module.exports = {
     try {
       res.setHeader('Content-Type', 'text/html');
       res.write('<p>views: ' + req.session.views + ' Time</p>');
-      //res.write('<p>expires in: ' + limitedTime / 1000 + ' second</p>');
+      res.write('<p>expires in:  second</p>');
       res.end();
     } catch (err) {
       next(err);

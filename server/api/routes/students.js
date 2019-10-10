@@ -38,7 +38,7 @@ router
 
 router
   .route('/setSessionmidile')
-  .get(StudentsController.setSessionmidile)
+  .get(SessionsController.setSession, StudentsController.setSessionmidile)
   .post(StudentsController.test);
 
 router
